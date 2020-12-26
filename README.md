@@ -5,17 +5,17 @@ Other users can vote on these gradients.
 ## Models
 
 ### User
-- email
-- name
-- password
-- gradients
-- votes
+- email: String
+- name: String
+- password: String
+- gradients: Gradient[]
+- votes: Vote[]
 
 ### Gradient
-- data
-- User
-- Votes
+- data: String
+- submitted_by: User
+- votes: Vote[]
 
 ### Vote
-- User
-- Gradient
+- user: User
+- Gradient: Gradient
