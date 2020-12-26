@@ -1,0 +1,24 @@
+type User {
+    email: String! @unique
+    name: String!
+    password: String!
+    gradients: [Gradient!] @relation
+    votes: [Vote!] @relation
+}
+
+type Gradient {
+    data: String!
+    submitted_by: User!
+    votes: [Vote!] @relation
+}
+
+type Vote @embedded {
+    user: User! @relation
+    gradient: Gradient! @relation
+}
+
+type Query {
+    allUsers: [User!]
+    allGradients: [Gradient!]
+    votesCount(gradientId: String!): Int! @resolver(name: "count" )
+}
