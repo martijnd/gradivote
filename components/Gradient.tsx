@@ -10,7 +10,7 @@ type Props = {
 function GradientItem({ gradient }: Props) {
   const queryClient = useQueryClient();
   const [errorMessage, setErrorMessage] = useState('');
-  async function castVote(uuid: string) {
+  async function onAddVote(uuid: string) {
     try {
       await addVote(uuid);
       setErrorMessage('');
@@ -29,7 +29,7 @@ function GradientItem({ gradient }: Props) {
       >
         <button
           className="flex items-center justify-center w-full h-full text-white transition-opacity duration-200 opacity-0 hover:opacity-100"
-          onClick={() => castVote(gradient.uuid)}
+          onClick={() => onAddVote(gradient.uuid)}
         >
           Vote
         </button>
