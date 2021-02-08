@@ -19,6 +19,7 @@ function GradientItem({ gradient }: Props) {
       setErrorMessage('Already voted on this gradient!');
     }
   }
+  const count = gradient.votes_aggregate.aggregate.count;
 
   return (
     <div className="flex flex-col">
@@ -34,7 +35,7 @@ function GradientItem({ gradient }: Props) {
         </button>
       </div>
       <span className="block hover:hidden">
-        {gradient.votes_aggregate.aggregate.count} votes
+        {count} vote{count === 1 ? '' : 's'}
       </span>
       {errorMessage !== '' && (
         <div className="px-4 py-2 text-red-700 bg-red-200 border border-red-700 rounded">
