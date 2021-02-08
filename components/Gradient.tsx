@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { QueryClient, useMutation, useQueryClient } from 'react-query';
+import { addVote } from '../lib/gradient';
 import { Gradient } from '../types/gradient';
 
 type Props = {
@@ -5,14 +8,39 @@ type Props = {
 };
 
 function GradientItem({ gradient }: Props) {
+  const queryClient = useQueryClient();
+  const [errorMessage, setErrorMessage] = useState('');
+  async function castVote(uuid: string) {
+    try {
+      await addVote(uuid);
+      setErrorMessage('');
+      queryClient.invalidateQueries('gradients');
+    } catch (e) {
+      setErrorMessage('Already voted on this gradient!');
+    }
+  }
+
   return (
-    <div
-      className="w-40 h-20 my-4 bg-blue-400 rounded"
-      style={{ background: `linear-gradient(${gradient.data})` }}
-    >
-      <div className="flex justify-center items-center w-full h-full text-white opacity-0 hover:opacity-100 transition-opacity duration-200">
-        <button className="border-2 px-2 py-1 rounded">Vote</button>
+    <div className="flex flex-col">
+      <div
+        className="h-20 mt-4 bg-blue-400 rounded"
+        style={{ background: `linear-gradient(${gradient.data})` }}
+      >
+        <button
+          className="flex items-center justify-center w-full h-full text-white transition-opacity duration-200 opacity-0 hover:opacity-100"
+          onClick={() => castVote(gradient.uuid)}
+        >
+          Vote
+        </button>
       </div>
+      <span className="block hover:hidden">
+        {gradient.votes_aggregate.aggregate.count} votes
+      </span>
+      {errorMessage !== '' && (
+        <div className="px-4 py-2 text-red-700 bg-red-200 border border-red-700 rounded">
+          {errorMessage}
+        </div>
+      )}
     </div>
   );
 }

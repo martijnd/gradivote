@@ -8,7 +8,7 @@ type Props = {
 function GradientList({ gradients }: Props) {
   return (
     <>
-      <div>
+      <div className="grid grid-cols-6 gap-4">
         {gradients.map((gradient) => (
           <GradientItem key={gradient.uuid} gradient={gradient} />
         ))}
