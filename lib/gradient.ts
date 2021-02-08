@@ -1,7 +1,6 @@
 import { gql, request } from 'graphql-request';
 import { useQuery } from 'react-query';
 import { Gradient } from '../types/gradient';
-import { Vote } from '../types/vote';
 import { getUserUuid } from './userUuid';
 
 export function useGradients() {
@@ -26,6 +25,21 @@ export function useGradients() {
 
     return gradients;
   });
+}
+
+export function addGradient(data: string) {
+  const userUuid = getUserUuid();
+
+  return request(
+    process.env.NEXT_PUBLIC_HASURA_GRAPHQL_ENDPOINT,
+    gql`
+        mutation {
+          insert_gradients_one(object: { data: "${data}", user_uuid: "${userUuid}" }) {
+            data
+          }
+        }
+      `
+  );
 }
 
 export function addVote(gradientUuid: string) {

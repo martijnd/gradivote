@@ -25,7 +25,7 @@ function GradientItem({ gradient }: Props) {
     <div className="flex flex-col">
       <div
         className="h-20 mt-4 bg-blue-400 rounded"
-        style={{ background: `linear-gradient(${gradient.data})` }}
+        style={{ background: gradient.data.toString() }}
       >
         <button
           className="flex items-center justify-center w-full h-full text-white transition-opacity duration-200 opacity-0 hover:opacity-100"
