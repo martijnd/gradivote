@@ -1,16 +1,15 @@
 import Nav from '../components/nav';
-import { useQueryClient } from 'react-query';
 import { useGradients } from '../lib/gradient';
+import GradientList from '../components/GradientList';
 
 function IndexPage() {
-  const queryClient = useQueryClient();
   const { status, data, error, isFetching } = useGradients();
 
   return (
     <div>
       <Nav />
-      <div>
-        <h1>Gradients</h1>
+      <div className="container mx-auto">
+        <h1 className="text-blue-500 font-bold text-xl mb-4">Gradients</h1>
         <div>
           {status === 'loading' ? (
             'Loading...'
@@ -18,27 +17,8 @@ function IndexPage() {
             <span>Error: {error.message}</span>
           ) : (
             <>
-              <div>
-                {data.map((gradient) => (
-                  <p key={gradient.uuid}>
-                    <a
-                      href="#"
-                      style={
-                        // We can find the existing query data here to show bold links for
-                        // ones that are cached
-                        queryClient.getQueryData(['gradient', gradient.uuid])
-                          ? {
-                              fontWeight: 'bold',
-                              color: 'green',
-                            }
-                          : {}
-                      }
-                    >
-                      {gradient.data}
-                    </a>
-                  </p>
-                ))}
-              </div>
+              <GradientList gradients={data} />
+
               <div>{isFetching ? 'Background Updating...' : ' '}</div>
             </>
           )}

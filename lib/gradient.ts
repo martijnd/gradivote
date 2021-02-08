@@ -12,6 +12,11 @@ export function useGradients() {
             uuid
             data
             user_uuid
+            votes_aggregate {
+              aggregate {
+                count
+              }
+            }
           }
         }
       `
