@@ -1,6 +1,17 @@
+import gql from 'graphql-tag'
 import Nav from '../components/nav'
+import withData from '../config';
+import { useQuery } from 'react-query';
+const query = gql`
+	query {
+	  author {
+	    id
+	    name
+	  }
+	}
+`
 
-export default function IndexPage() {
+ function IndexPage() {
   return (
     <div>
       <Nav />
@@ -12,3 +23,5 @@ export default function IndexPage() {
     </div>
   )
 }
+
+export default withData(IndexPage);
