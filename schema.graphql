@@ -1,0 +1,330 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+# columns and relationships of "gradients"
+type gradients {
+  data(
+    # JSON select path
+    path: String
+  ): jsonb!
+  user_uuid: String!
+}
+
+# input type for inserting array relation for remote table "gradients"
+input gradients_arr_rel_insert_input {
+  data: [gradients_insert_input!]!
+}
+
+# Boolean expression to filter rows from the table "gradients". All fields are combined with a logical 'AND'.
+input gradients_bool_exp {
+  _and: [gradients_bool_exp]
+  _not: gradients_bool_exp
+  _or: [gradients_bool_exp]
+  data: jsonb_comparison_exp
+  user_uuid: String_comparison_exp
+}
+
+# input type for inserting data into table "gradients"
+input gradients_insert_input {
+  data: jsonb
+  user_uuid: String
+}
+
+# response of any mutation on the table "gradients"
+type gradients_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [gradients!]!
+}
+
+# input type for inserting object relation for remote table "gradients"
+input gradients_obj_rel_insert_input {
+  data: gradients_insert_input!
+}
+
+# ordering options when selecting data from "gradients"
+input gradients_order_by {
+  data: order_by
+  user_uuid: order_by
+}
+
+# primary key columns input for table: "gradients"
+input gradients_pk_columns_input {
+  uuid: uuid!
+}
+
+# select columns of table "gradients"
+enum gradients_select_column {
+  # column name
+  data
+
+  # column name
+  user_uuid
+}
+
+scalar jsonb
+
+# expression to compare columns of type jsonb. All fields are combined with logical 'AND'.
+input jsonb_comparison_exp {
+  # is the column contained in the given json value
+  _contained_in: jsonb
+
+  # does the column contain the given json value at the top level
+  _contains: jsonb
+  _eq: jsonb
+  _gt: jsonb
+  _gte: jsonb
+
+  # does the string exist as a top-level key in the column
+  _has_key: String
+
+  # do all of these strings exist as top-level keys in the column
+  _has_keys_all: [String!]
+
+  # do any of these strings exist as top-level keys in the column
+  _has_keys_any: [String!]
+  _in: [jsonb!]
+  _is_null: Boolean
+  _lt: jsonb
+  _lte: jsonb
+  _neq: jsonb
+  _nin: [jsonb!]
+}
+
+# mutation root
+type mutation_root {
+  # insert data into the table: "gradients"
+  insert_gradients(
+    # the rows to be inserted
+    objects: [gradients_insert_input!]!
+  ): gradients_mutation_response
+
+  # insert a single row into the table: "gradients"
+  insert_gradients_one(
+    # the row to be inserted
+    object: gradients_insert_input!
+  ): gradients
+
+  # insert data into the table: "votes"
+  insert_votes(
+    # the rows to be inserted
+    objects: [votes_insert_input!]!
+  ): votes_mutation_response
+
+  # insert a single row into the table: "votes"
+  insert_votes_one(
+    # the row to be inserted
+    object: votes_insert_input!
+  ): votes
+}
+
+# column ordering options
+enum order_by {
+  # in the ascending order, nulls last
+  asc
+
+  # in the ascending order, nulls first
+  asc_nulls_first
+
+  # in the ascending order, nulls last
+  asc_nulls_last
+
+  # in the descending order, nulls first
+  desc
+
+  # in the descending order, nulls first
+  desc_nulls_first
+
+  # in the descending order, nulls last
+  desc_nulls_last
+}
+
+# query root
+type query_root {
+  # fetch data from the table: "gradients"
+  gradients(
+    # distinct select on columns
+    distinct_on: [gradients_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [gradients_order_by!]
+
+    # filter the rows returned
+    where: gradients_bool_exp
+  ): [gradients!]!
+
+  # fetch data from the table: "gradients" using primary key columns
+  gradients_by_pk(uuid: uuid!): gradients
+
+  # fetch data from the table: "votes"
+  votes(
+    # distinct select on columns
+    distinct_on: [votes_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [votes_order_by!]
+
+    # filter the rows returned
+    where: votes_bool_exp
+  ): [votes!]!
+
+  # fetch data from the table: "votes" using primary key columns
+  votes_by_pk(uuid: uuid!): votes
+}
+
+# expression to compare columns of type String. All fields are combined with logical 'AND'.
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+# subscription root
+type subscription_root {
+  # fetch data from the table: "gradients"
+  gradients(
+    # distinct select on columns
+    distinct_on: [gradients_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [gradients_order_by!]
+
+    # filter the rows returned
+    where: gradients_bool_exp
+  ): [gradients!]!
+
+  # fetch data from the table: "gradients" using primary key columns
+  gradients_by_pk(uuid: uuid!): gradients
+
+  # fetch data from the table: "votes"
+  votes(
+    # distinct select on columns
+    distinct_on: [votes_select_column!]
+
+    # limit the number of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [votes_order_by!]
+
+    # filter the rows returned
+    where: votes_bool_exp
+  ): [votes!]!
+
+  # fetch data from the table: "votes" using primary key columns
+  votes_by_pk(uuid: uuid!): votes
+}
+
+scalar uuid
+
+# expression to compare columns of type uuid. All fields are combined with logical 'AND'.
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+
+# columns and relationships of "votes"
+type votes {
+  gradient_id: uuid!
+  user_uuid: String!
+}
+
+# input type for inserting array relation for remote table "votes"
+input votes_arr_rel_insert_input {
+  data: [votes_insert_input!]!
+}
+
+# Boolean expression to filter rows from the table "votes". All fields are combined with a logical 'AND'.
+input votes_bool_exp {
+  _and: [votes_bool_exp]
+  _not: votes_bool_exp
+  _or: [votes_bool_exp]
+  gradient_id: uuid_comparison_exp
+  user_uuid: String_comparison_exp
+}
+
+# input type for inserting data into table "votes"
+input votes_insert_input {
+  gradient_id: uuid
+  user_uuid: String
+}
+
+# response of any mutation on the table "votes"
+type votes_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [votes!]!
+}
+
+# input type for inserting object relation for remote table "votes"
+input votes_obj_rel_insert_input {
+  data: votes_insert_input!
+}
+
+# ordering options when selecting data from "votes"
+input votes_order_by {
+  gradient_id: order_by
+  user_uuid: order_by
+}
+
+# primary key columns input for table: "votes"
+input votes_pk_columns_input {
+  uuid: uuid!
+}
+
+# select columns of table "votes"
+enum votes_select_column {
+  # column name
+  gradient_id
+
+  # column name
+  user_uuid
+}
+

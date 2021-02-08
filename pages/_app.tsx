@@ -1,14 +1,20 @@
-import Amplify from 'aws-amplify'
-import { AppProps } from 'next/app'
-import '../styles/index.css'
-import awsconfig from '../aws-exports'
+import '../styles/index.css';
 
-Amplify.configure({
-  ...awsconfig, ssr: true
-})
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { AppProps } from 'next/dist/next-server/lib/router/router';
+import { getUserUuid } from '../lib/userUuid';
 
-function MyApp ({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const queryClient = new QueryClient();
+
+function MyApp({ Component, pageProps }: AppProps) {
+  if (typeof window !== 'undefined') getUserUuid();
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Component {...pageProps} />
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
