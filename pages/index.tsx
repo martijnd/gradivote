@@ -1,27 +1,53 @@
-import gql from 'graphql-tag'
-import Nav from '../components/nav'
-import withData from '../config';
-import { useQuery } from 'react-query';
-const query = gql`
-	query {
-	  author {
-	    id
-	    name
-	  }
-	}
-`
+import Nav from "../components/nav";
+import { useQueryClient } from "react-query";
+import { useGradients } from "../lib/gradient";
 
- function IndexPage() {
+
+
+function IndexPage() {
+  const queryClient = useQueryClient();
+  const { status, data, error, isFetching } = useGradients();
+
   return (
     <div>
       <Nav />
-      <div className="py-20">
-        <h1 className="text-5xl text-center text-gray-700 dark:text-gray-100">
-          Next.js + Tailwind CSS 2.0
-        </h1>
+      <div>
+      <h1>Gradients</h1>
+      <div>
+        {status === "loading" ? (
+          "Loading..."
+        ) : status === "error" ? (
+          <span>Error: {error.message}</span>
+        ) : (
+          <>
+            <div>
+              {data.map((gradient) => (
+                <p key={gradient.uuid}>
+                  <a
+                    href="#"
+                    style={
+                      // We can find the existing query data here to show bold links for
+                      // ones that are cached
+                      queryClient.getQueryData(["gradient", gradient.uuid])
+                        ? {
+                            fontWeight: "bold",
+                            color: "green",
+                          }
+                        : {}
+                    }
+                  >
+                    {gradient.data}
+                  </a>
+                </p>
+              ))}
+            </div>
+            <div>{isFetching ? "Background Updating..." : " "}</div>
+          </>
+        )}
       </div>
     </div>
-  )
+    </div>
+  );
 }
 
-export default withData(IndexPage);
+export default IndexPage;
