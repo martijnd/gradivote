@@ -9,7 +9,7 @@ export function useGradients() {
       process.env.NEXT_PUBLIC_HASURA_GRAPHQL_ENDPOINT,
       gql`
         query {
-          gradients {
+          gradients(order_by: { created_at: desc }) {
             uuid
             data
             user_uuid
