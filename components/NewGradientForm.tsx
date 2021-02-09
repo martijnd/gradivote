@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { addGradient } from '../lib/gradient';
 
@@ -16,7 +16,11 @@ function NewGradientForm() {
   const [color1, setColor1] = useState('#7714c8');
   const [color2, setColor2] = useState('#c60c5f');
   const [direction, setDirection] = useState(directionOptions[0]);
-  const result = `linear-gradient(${direction}, ${color1}, ${color2})`;
+  const [degrees, setDegrees] = useState(0);
+  const [directionType, setDirectionType] = useState('direction');
+  const directionResult =
+    directionType === 'degrees' ? `${degrees}deg` : direction;
+  const result = `linear-gradient(${directionResult}, ${color1}, ${color2})`;
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -28,6 +32,16 @@ function NewGradientForm() {
     }
   }
 
+  function onDirectionChange(e) {
+    setDirectionType('direction');
+    setDirection(e.target.value);
+  }
+
+  function onDegreesInput(e) {
+    setDirectionType('degrees');
+    setDegrees(+e.target.value);
+  }
+
   return (
     <div className="py-3">
       <h2 className="mb-4 text-xl font-bold text-blue-500">Add a gradient</h2>
@@ -36,22 +50,31 @@ function NewGradientForm() {
           <div>
             <label htmlFor="direction">
               Direction
-              <select
-                className="block w-full lg:w-60 p-2 mb-4 mr-2 border rounded"
-                name="direction"
-                onChange={(e) => setDirection(e.target.value)}
-              >
-                {directionOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+              <div className="grid grid-cols-2 gap-4">
+                <select
+                  className="block w-full p-2 mb-4 mr-2 border rounded"
+                  name="direction"
+                  onChange={onDirectionChange}
+                >
+                  {directionOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  className="block w-full p-2 mb-4 mr-2 border rounded"
+                  type="number"
+                  placeholder="Enter degrees"
+                  inputMode="numeric"
+                  onChange={onDegreesInput}
+                />
+              </div>
             </label>
             <label htmlFor="color1">
               Color 1
               <input
-                className="block h-10 mb-4 w-full lg:w-60"
+                className="block h-10 mb-4 w-full"
                 type="color"
                 name="color1"
                 value={color1}
@@ -61,7 +84,7 @@ function NewGradientForm() {
             <label htmlFor="color2">
               Color 2
               <input
-                className="block h-10 mb-4 w-full lg:w-60"
+                className="block h-10 mb-4 w-full"
                 type="color"
                 name="color2"
                 value={color2}
@@ -82,7 +105,7 @@ function NewGradientForm() {
           type="submit"
           className="w-full bg-blue-300 text-white font-semibold py-4 mt-4"
         >
-          Submit
+          Add gradient
         </button>
       </form>
     </div>

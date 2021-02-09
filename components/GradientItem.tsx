@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { QueryClient, useMutation, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import { addVote } from '../lib/gradient';
 import { Gradient } from '../types/gradient';
 
@@ -23,20 +23,19 @@ function GradientItem({ gradient }: Props) {
 
   return (
     <div className="flex flex-col">
+      {count} vote{count === 1 ? '' : 's'}
       <div
-        className="h-20 mt-4 bg-blue-400 rounded"
+        className="h-20 bg-blue-400 rounded"
         style={{ background: gradient.data.toString() }}
-      >
+      />
+      <div className="block hover:hidden">
         <button
-          className="flex items-center justify-center w-full h-full text-white transition-opacity duration-200 opacity-0 hover:opacity-100"
+          className="w-full px-4 py-2 my-2 font-semibold text-white rounded-sm from-red-600 to-red-800 bg-gradient-to-r"
           onClick={() => onAddVote(gradient.uuid)}
         >
           Vote
         </button>
       </div>
-      <span className="block hover:hidden">
-        {count} vote{count === 1 ? '' : 's'}
-      </span>
       {errorMessage !== '' && (
         <div className="px-4 py-2 text-red-700 bg-red-200 border border-red-700 rounded">
           {errorMessage}

@@ -1,5 +1,5 @@
 import { useGradients } from '../lib/gradient';
-import GradientItem from './Gradient';
+import GradientItem from './GradientItem';
 
 function GradientList() {
   const { status, data: gradients, error, isFetching } = useGradients();
