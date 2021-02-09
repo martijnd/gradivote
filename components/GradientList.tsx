@@ -4,7 +4,7 @@ import GradientItem from './GradientItem';
 function GradientList() {
   const { status, data: gradients, error, isFetching } = useGradients();
   return (
-    <div className="py-3">
+    <article className="py-3">
       <h1 className="text-blue-500 font-bold text-xl mb-4">
         Gradients {isFetching ? '- loading...' : ''}
       </h1>
@@ -19,7 +19,7 @@ function GradientList() {
           ))}
         </div>
       )}
-    </div>
+    </article>
   );
 }
 

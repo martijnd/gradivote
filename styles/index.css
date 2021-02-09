@@ -1,7 +1,9 @@
 @tailwind base;
 
 /* Write your own custom base styles here */
-
+html {
+  overflow-y: scroll;
+}
 /* Start purging... */
 @tailwind components;
 /* Stop purging. */

@@ -10,12 +10,10 @@ function IndexPage() {
         <title>Gradivote</title>
       </Head>
       <Nav />
-      <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 lg:gap-5 divide-y-2 md:divide-y-0 divide-dotted">
-          <GradientList />
-          <NewGradientForm />
-        </div>
-      </div>
+      <main className="container mx-auto px-4 grid lg:grid-cols-2 lg:gap-5 divide-y-2 md:divide-y-0 divide-dotted">
+        <GradientList />
+        <NewGradientForm />
+      </main>
     </div>
   );
 }

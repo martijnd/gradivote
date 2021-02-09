@@ -12,20 +12,25 @@ function GradientItem({ gradient }: Props) {
   const [errorMessage, setErrorMessage] = useState('');
   async function onAddVote(uuid: string) {
     try {
+      setCount(count + 1);
       await addVote(uuid);
       setErrorMessage('');
       queryClient.invalidateQueries('gradients');
     } catch (e) {
+      setCount(gradient.votes_aggregate.aggregate.count);
       setErrorMessage('Already voted on this gradient!');
     }
   }
-  const count = gradient.votes_aggregate.aggregate.count;
+
+  const [count, setCount] = useState(gradient.votes_aggregate.aggregate.count);
 
   return (
     <div className="flex flex-col">
-      {count} vote{count === 1 ? '' : 's'}
+      <span>
+        {count} vote{count === 1 ? '' : 's'}
+      </span>
       <div
-        className="h-20 bg-blue-400 rounded"
+        className="h-40 md:h-20 bg-blue-400 rounded"
         style={{ background: gradient.data.toString() }}
       />
       <div className="block hover:hidden">

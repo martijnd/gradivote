@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { addGradient } from '../lib/gradient';
 
@@ -43,7 +43,7 @@ function NewGradientForm() {
   }
 
   return (
-    <div className="py-3">
+    <article className="py-3">
       <h2 className="mb-4 text-xl font-bold text-blue-500">Add a gradient</h2>
       <form onSubmit={onSubmit}>
         <div className="grid lg:grid-cols-2 gap-4">
@@ -108,7 +108,7 @@ function NewGradientForm() {
           Add gradient
         </button>
       </form>
-    </div>
+    </article>
   );
 }
 
