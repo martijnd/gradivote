@@ -1,9 +1,15 @@
 import { gql, request } from 'graphql-request';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Gradient } from '../types/gradient';
 import { getUserUuid } from './userUuid';
 
 export function useGradients() {
+  const [userUuid, setUserUuid] = useState('');
+  useEffect(() => {
+    setUserUuid(getUserUuid());
+  }, []);
+
   return useQuery<Gradient[], Error>('gradients', async () => {
     const { gradients } = await request(
       process.env.NEXT_PUBLIC_HASURA_GRAPHQL_ENDPOINT,
@@ -13,6 +19,7 @@ export function useGradients() {
             uuid
             data
             user_uuid
+            has_voted(args: {user_id: "${userUuid}"})
             votes_aggregate {
               aggregate {
                 count

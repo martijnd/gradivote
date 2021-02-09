@@ -26,7 +26,7 @@ function GradientItem({ gradient, onError }: Props) {
 
   return (
     <div className="flex flex-col">
-      <span>
+      <span className="font-semibold">
         {count} vote{count === 1 ? '' : 's'}
       </span>
       <div className="shadow-lg">
@@ -38,8 +38,9 @@ function GradientItem({ gradient, onError }: Props) {
           <button
             className="w-full px-4 py-2 font-semibold text-white border-t border-white rounded-sm rounded-t-none from-red-600 to-red-800 bg-gradient-to-r"
             onClick={() => onAddVote(gradient.uuid)}
+            disabled={gradient.has_voted}
           >
-            Vote
+            {gradient.has_voted ? 'Voted!' : 'Vote'}
           </button>
         </div>
       </div>
